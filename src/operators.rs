@@ -111,11 +111,11 @@ pub fn swiglu(y: &mut Tensor<f32>, x: &Tensor<f32>) {
     }
 
     let _x = x.data();
-    let silu_x = x.iter().map(|&x|sigmoid(x)*x).collect::<Vec<_>>();
+    let silu_x = _x.iter().map(|&x|sigmoid(x)*x).collect::<Vec<_>>();
     let mut idx=0;
     unsafe{
         let mut _y = y.data_mut();
-        for elem in _y.iter(){
+        for elem in _y.iter_mut(){
             *elem = *elem * silu_x[idx];
             idx+=1;
         }
