@@ -8,6 +8,11 @@ use crate::params::LLamaParams;
 use crate::tensor::Tensor;
 use safetensors::SafeTensors;
 use std::path::Path;
+
+use crate::operators::rms_norm;
+use crate::operators::{matmul_transb, swiglu};
+
+
 pub struct Llama<T> {
     vocab: usize,           // vocab size
     n_layers: usize,        // number of layers
@@ -168,6 +173,12 @@ fn mlp(
     eps: f32,
 ) {
     todo!("Implement mlp");
+    rms_norm(hidden_states,residual,rms_w,eps);
+    matmul_transb(gate,0.,hidden_states,w_gate,1.);
+    matmul_transb(up,0.,hidden_states,w_up,1.);
+    swiglu(up,gate);
+    matmul_transb(residual, 1., up, w_down, 1.);
+
 }
 
 #[test]
