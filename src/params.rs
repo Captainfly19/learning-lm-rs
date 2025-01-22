@@ -35,8 +35,8 @@ impl LLamaParams<f32> {
         let layer = config.num_hidden_layers;
         let mut rms_att_w = Vec::with_capacity(layer);
         let mut wq = Vec::with_capacity(layer);
-        let mut wk = Vec::with_capacity(layer);       
-        let mut wv = Vec::with_capacity(layer); 
+        let mut wk = Vec::with_capacity(layer);
+        let mut wv = Vec::with_capacity(layer);
         let mut wo = Vec::with_capacity(layer);
         let mut rms_ffn_w = Vec::with_capacity(layer);
         let mut w_up = Vec::with_capacity(layer);
@@ -45,10 +45,10 @@ impl LLamaParams<f32> {
 
         for i in 0..layer{
             rms_att_w.push(get_tensor(&format!("model.layers.{}.input_layernorm.weight", i)));
-            wq.push(get_tensor(&format!("model.layers.{}.self_attn_q_proj.weight",i)));
-            wk.push(get_tensor(&format!("model.layers.{}.self_attn_k_proj.weight",i)));
-            wv.push(get_tensor(&format!("model.layers.{}.self_attn_v_proj.weight",i)));
-            wo.push(get_tensor(&format!("model.layers.{}.self_attn_o_proj.weight",i)));
+            wq.push(get_tensor(&format!("model.layers.{}.self_attn.q_proj.weight", i)));
+            wk.push(get_tensor(&format!("model.layers.{}.self_attn.k_proj.weight", i)));
+            wv.push(get_tensor(&format!("model.layers.{}.self_attn.v_proj.weight", i)));
+            wo.push(get_tensor(&format!("model.layers.{}.self_attn.o_proj.weight", i)));
             rms_ffn_w.push(get_tensor(&format!("model.layers.{}.post_attention_layernorm.weight", i)));
             w_up.push(get_tensor(&format!("model.layers.{}.mlp.up_proj.weight", i)));
             w_gate.push(get_tensor(&format!("model.layers.{}.mlp.gate_proj.weight", i)));
